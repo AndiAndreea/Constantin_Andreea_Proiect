@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Constantin_Andreea_Lab8.Data;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Constantin_Andreea_Lab8
 {
@@ -29,6 +30,10 @@ namespace Constantin_Andreea_Lab8
 
             services.AddDbContext<Constantin_Andreea_Lab8Context>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("Constantin_Andreea_Lab8Context")));
+
+            services.AddSession();
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,12 +43,18 @@ namespace Constantin_Andreea_Lab8
             {
                 app.UseDeveloperExceptionPage();
             }
+            
             else
             {
+
+
+
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseSession();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
